@@ -19,7 +19,6 @@ before_script:
 - cp .env.example .env
 - export $(cat .env | grep -v ^# | xargs)
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH | sed -e 's/[\/]/-/g' | sed -e 's/[\#]//g'; fi`
-- export DOCKER_IMAGE_DEV=$CI_REGISTRY_IMAGE:dev_$TAG
 - export DOCKER_IMAGE_PROD=$CI_REGISTRY_IMAGE:$TAG
 - export CI_BUILD_ID=$TRAVIS_BUILD_ID
 - export CI_BUILD_REF=$TRAVIS_COMMIT
@@ -39,5 +38,4 @@ script:
 - docker-compose -f docker-compose.prod.yml build --pull
 after_success:
 - docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD
-- docker push $DOCKER_IMAGE_DEV
 - docker push $DOCKER_IMAGE_PROD
