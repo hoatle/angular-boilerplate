@@ -1,0 +1,8 @@
+pipeline:
+  build:
+    image: teracy/angular-cli
+    commands:
+      - yarn
+      - yarn run lint
+      - ng test --browsers Chrome_no_sandbox -w false
+      - yarn run e2e
